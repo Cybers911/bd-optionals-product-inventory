@@ -35,11 +35,33 @@ public class ProductInventory {
      */
     Map<Integer, String> findProductNames() {
         // TODO: replace stub implementation
-        Map<Integer, String> stubMap = new HashMap<Integer, String>();
+       /* Map<Integer, String> stubMap = new HashMap<Integer, String>();
         for (Integer productID : productIDs) {
             stubMap.put(productID, "");
         }
-        return stubMap;
+        return stubMap;*/
+
+        if (productUtility == null) {
+
+            throw new IllegalArgumentException("ProductUtility cannot be null");
+
+        }
+        if (productIDs == null) {
+            throw new IllegalArgumentException("Product IDs cannot be null");
+        }
+
+        Map<Integer, String> productMap = new HashMap<>();
+            for (Integer productID : productIDs) {
+                try {
+                    String productName = productUtility.findProductName(productID);
+                    if (productName != null) {
+                        productMap.put(productID, productName);
+                    }
+                } catch (NullPointerException e) {
+                    throw new IllegalArgumentException("Product ID , is Null");
+                }
+            }
+            return productMap;
     }
 
     /**
@@ -49,7 +71,17 @@ public class ProductInventory {
      */
     Optional<Boolean> isProductReady(Integer productID) {
         // TODO: replace stub implementation
-        Boolean stubResult = productUtility.isProductReady(0);
-        return Optional.of(stubResult);
+      /*  Boolean stubResult = productUtility.isProductReady(0);
+        return Optional.of(stubResult);*/
+        if (productID == null) {
+            throw new IllegalArgumentException("ProductID can not be null");
+
+        }
+        try {
+            Boolean isReady = productUtility.isProductReady(productID);
+            return Optional.of(isReady);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Product ID , is Null");
+        }
     }
 }
